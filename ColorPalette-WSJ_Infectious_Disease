@@ -1,0 +1,18 @@
+<color-palette name="WSJInfectious" type="ordered-sequential" >
+ <color>#cf472e</color>
+ <color>#e04e32</color>
+ <color>#ef5336</color>
+ <color>#e29421</color>
+ <color>#e9b330</color>
+ <color>#f1ca3b</color>
+ <color>#ffd73e</color>
+ <color>#4ab04a</color>
+ <color>#29a68a</color>
+ <color>#18a1af</color>
+ <color>#0e9ec1</color>
+ <color>#0099dc</color>
+ <color>#95cbee</color>
+ <color>#d8e9f8</color>
+ <color>#e1e6ec</color>
+ <color>#f4faff</color>
+</color-palette>
