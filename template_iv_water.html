@@ -1,0 +1,64 @@
+<html>
+<head>
+<style>
+body {
+    background-color: #D4D4D4;
+}
+</style>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+<script>
+$.ajaxSetup({
+
+    error: function(x, e) {
+      $("#error").show();
+      $("viz").hide();
+      $("#details").text("error: "+JSON.stringify(x, null, 4));
+      console.log(JSON.stringify(x, null, 4));
+    
+    }
+});
+
+// TODO: enter your viz URL, parameter name, and geo-level of the parameter.
+// JavaScript is case sensitive, enter the paramLevel exactly as described
+var vizUrl = "https://public.tableau.com/views/IVWater/WaterDeaths?:display_count=y&:origin=viz_share_link"
+var vizParam = "pCountry"
+var vizParam2 = "pPostal"
+var vizParam3 = "pCity"
+var paramLevel = "country" //city, region, country, postal
+var paramLevel2 = "postal"
+var paramLevel3 = "city"
+var size = ["100%", "100%"] // width, height in double quotes
+
+//WARNING: don't change this
+var vizUrlSuffix = "?:embed=y&:displayCount=yes&:showVizHome=no&:hoswidtt_url=https%3A%2F%2Fpublic.tableau.com%2F&:tabs=no&:toolbar=yes&:animate_transition=yes&:display_static_image=no&:display_spinner=no&:display_overlay=yes&:display_count=yes&:loadOrderID=0&"
+
+//This part gets the location and updates viz with the location parameter
+$.get("http://ipinfo.io/geo", function (response, status) {
+
+console.log(response);
+// console.log(status);
+
+$("#ip").html("ip: " + response.ip);
+$("#address").html("location: " + response.city + ", " + response.region);
+$("#locationChoice").html(paramLevel + ": " + response[paramLevel]);
+$("#locationChoice2").html(paramLevel2 + ": " + response[paramLevel2]);
+$("#locationChoice3").html(paramLevel3 + ": " + response[paramLevel3]);
+$("#details").html(JSON.stringify(response, null, 4));
+
+//this part gets the viz and updates the iframe
+$("#viz")
+.attr("src",vizUrl + vizUrlSuffix + vizParam + "=" + response[paramLevel] + "&" + vizParam2 + "=" + response[paramLevel2] + "&" + vizParam3 + "=" + response[paramLevel3])
+.attr("width", size[0])
+.attr("height", size[1])
+.style("display: block; margin: 0px; padding: 0px; border: none; width:"+size[0]+"; height:"+size[1]);
+
+}, "jsonp");
+</script>
+</head>
+<body>
+ <!-- this is the iframe that will hold the viz -->
+ <iframe id="viz" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe>
+</body>
+</html>
